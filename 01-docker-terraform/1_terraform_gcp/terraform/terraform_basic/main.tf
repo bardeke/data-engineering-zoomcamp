@@ -2,30 +2,29 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "4.51.0"
+      version = "5.13.0"
     }
   }
 }
 
 provider "google" {
-# Credentials only needs to be set if you do not have the GOOGLE_APPLICATION_CREDENTIALS set
-#  credentials = 
-  project = "<Your Project ID>"
-  region  = "us-central1"
+  credentials = file("./keys/gcpcreds.json")
+  project     = "chromatic-fx-411315"
+  region      = "us-central1"
 }
 
 
 
-resource "google_storage_bucket" "data-lake-bucket" {
-  name          = "<Your Unique Bucket Name>"
-  location      = "US"
+resource "google_storage_bucket" "demo-bucket" {
+  name     = "chromatic-fx-411315-terrabucket"
+  location = "US"
 
   # Optional, but recommended settings:
-  storage_class = "STANDARD"
+  storage_class               = "STANDARD"
   uniform_bucket_level_access = true
 
   versioning {
-    enabled     = true
+    enabled = true
   }
 
   lifecycle_rule {
@@ -33,16 +32,9 @@ resource "google_storage_bucket" "data-lake-bucket" {
       type = "Delete"
     }
     condition {
-      age = 30  // days
+      age = 1 // days
     }
   }
 
   force_destroy = true
-}
-
-
-resource "google_bigquery_dataset" "dataset" {
-  dataset_id = "<The Dataset Name You Want to Use>"
-  project    = "<Your Project ID>"
-  location   = "US"
 }

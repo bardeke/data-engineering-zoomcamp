@@ -31,6 +31,7 @@ resource "google_storage_bucket" "demo-bucket" {
 }
 
 resource "google_bigquery_dataset" "demo_dataset" {
-  dataset_id = var.bq_dataset_name
+  dataset_id = var.bq_dataset_namen
+  
   location   = var.location
 }
