@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "5.6.0"
+      version = "5.13.0"
     }
   }
 }
@@ -29,8 +29,6 @@ resource "google_storage_bucket" "demo-bucket" {
     }
   }
 }
-
-
 
 resource "google_bigquery_dataset" "demo_dataset" {
   dataset_id = var.bq_dataset_name
